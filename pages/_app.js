@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
@@ -6,14 +6,23 @@ import 'antd/dist/reset.css';
 
 import { Typography, Input, Avatar, Button } from 'antd';
 
-import { FirebaseService } from '../src/service/services';
+import { FirebaseService } from '../service/services';
 
 const { Title } = Typography;
 
 const FireBaseAuth = new FirebaseService();
 
 const App = ({ Component }) => {
-    const [isLogin, setLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState({ state: false });
+    const [profileImg, setProfileImg] = useState(null);
+
+    useEffect(() => {
+        console.log(isLogin);
+        if (isLogin.state) {
+            setProfileImg(isLogin.user.profile);
+        }
+    }, [isLogin]);
+
     const onGoogleLogin = async () => {
         const info = await FireBaseAuth.onLogin();
         if (info) {
@@ -21,7 +30,7 @@ const App = ({ Component }) => {
                 user: { uid, email, photoURL },
             } = info;
             console.log('Login.jsx: ', uid);
-            setLogin({
+            setIsLogin({
                 state: true,
                 user: {
                     uid,
@@ -31,6 +40,12 @@ const App = ({ Component }) => {
             });
         }
     };
+
+    const onSignOut = async () => {
+        const signOut = await FireBaseAuth.signOut();
+        if (signOut) setIsLogin({ state: false });
+    };
+
     return (
         <>
             <Head>
@@ -50,17 +65,17 @@ const App = ({ Component }) => {
             >
                 <Input.Search />
             </div>
-            {isLogin ? (
+            {isLogin.state ? (
                 <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                     <Avatar
+                        src={profileImg}
                         style={{ backgroundColor: 'slateblue', verticalAlign: 'middle' }}
                         size='large'
-                    >
-                        지니
-                    </Avatar>
+                    ></Avatar>
                     <Button
                         size='small'
                         style={{ margin: '0 16px', verticalAlign: 'middle' }}
+                        onClick={onSignOut}
                     >
                         로그아웃
                     </Button>
