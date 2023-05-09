@@ -4,7 +4,8 @@
     "main": "index.js",
     "scripts": {
         "dev": "next",
-        "build": "next Build"
+        "build": "next Build",
+        "start": "react-scripts start"
     },
     "author": "hyunS00",
     "license": "ISC",
@@ -14,6 +15,7 @@
     "dependencies": {
         "antd": "^5.4.7",
         "emotion": "^11.0.0",
+        "firebase": "^9.21.0",
         "next": "^12.3.4",
         "next-redux-wrapper": "^8.1.0",
         "prop-types": "^15.8.1",

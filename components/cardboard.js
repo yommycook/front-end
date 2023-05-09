@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, List, Typography } from 'antd';
 
 const { Title } = Typography;
