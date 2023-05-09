@@ -1,22 +1,47 @@
-import { useSelector } from 'react-redux';
-
+import React from 'react'; //안 써도 상관 없음! (Next에서는 걍 실행 가능! pages라는 디렉토리를 알아본당)
 import AppLayout from '../components/AppLayout';
-import PostCard from '../components/PostCard';
-import PostForm from '../components/PostForm';
+import Head from 'next/head';
+import Add from '../components/add';
+import CardBoard from '../components/cardboard';
 
 const Home = () => {
-    const { isLoggedIn } = useSelector((state) => state.user);
-    const { mainPosts } = useSelector((state) => state.post);
     return (
-        <AppLayout>
-            {isLoggedIn && <PostForm />}
-            {mainPosts.map((post) => (
-                <PostCard
-                    key={post.id}
-                    post={post}
-                />
-            ))}
-        </AppLayout>
+        <>
+            <Head>
+                <meta charSet='utf-8' />
+                <title>요미|나의 레시피</title>
+            </Head>
+            <AppLayout>
+                <Add />
+                <div
+                    style={{
+                        display: 'inline-block',
+                        verticalAlign: 'middle',
+                        margin: '30px',
+                    }}
+                >
+                    <CardBoard />
+                </div>
+                <div
+                    style={{
+                        display: 'inline-block',
+                        verticalAlign: 'middle',
+                        margin: '30px',
+                    }}
+                >
+                    <CardBoard />
+                </div>
+                <div
+                    style={{
+                        display: 'inline-block',
+                        verticalAlign: 'middle',
+                        margin: '30px',
+                    }}
+                >
+                    <CardBoard />
+                </div>
+            </AppLayout>
+        </>
     );
 };
 

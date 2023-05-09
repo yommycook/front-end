@@ -1,23 +1,52 @@
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
+import React, { useState } from 'react';
+import { Typography, Input, Avatar, Button } from 'antd';
 
-import wrapper from '../store/configureStore';
+const { Title } = Typography;
 
-const NodeBird = ({ Component }) => {
+const App = ({ Component }) => {
     return (
         <>
             <Head>
                 <meta charSet='utf-8' />
-                <title>NodeBird</title>
+                <title>요미</title>
             </Head>
+            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <Title>요미</Title>
+            </div>
+            <div
+                style={{
+                    display: 'inline-block',
+                    verticalAlign: 'middle',
+                    marginLeft: '80px',
+                    marginRight: '40px',
+                }}
+            >
+                <Input.Search />
+            </div>
+            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <Avatar
+                    style={{ backgroundColor: 'slateblue', verticalAlign: 'middle' }}
+                    size='large'
+                >
+                    지니
+                </Avatar>
+                <Button
+                    size='small'
+                    style={{ margin: '0 16px', verticalAlign: 'middle' }}
+                >
+                    로그아웃
+                </Button>
+            </div>
             <Component />
         </>
     );
 };
 
-NodeBird.propTypes = {
+App.propTypes = {
     Component: PropTypes.elementType.isRequired,
 };
 
-export default wrapper.withRedux(NodeBird);
+export default App;
