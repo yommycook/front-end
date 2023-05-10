@@ -13,15 +13,8 @@ const { Title } = Typography;
 const FireBaseAuth = new FirebaseService();
 
 const App = ({ Component }) => {
-    const [isLogin, setIsLogin] = useState({ state: false });
-    const [profileImg, setProfileImg] = useState(null);
-
-    useEffect(() => {
-        console.log(isLogin);
-        if (isLogin.state) {
-            setProfileImg(isLogin.user.profile);
-        }
-    }, [isLogin]);
+    const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState(null);
 
     const onGoogleLogin = async () => {
         const info = await FireBaseAuth.onLogin();
@@ -29,21 +22,14 @@ const App = ({ Component }) => {
             const {
                 user: { uid, email, photoURL },
             } = info;
-            console.log('Login.jsx: ', uid);
-            setIsLogin({
-                state: true,
-                user: {
-                    uid,
-                    email,
-                    profile: photoURL,
-                },
-            });
+            setIsLogin(true);
+            setUser({ uid, email, profile: photoURL });
         }
     };
 
     const onSignOut = async () => {
         const signOut = await FireBaseAuth.signOut();
-        if (signOut) setIsLogin({ state: false });
+        if (signOut) setIsLogin(false);
     };
 
     return (
@@ -65,10 +51,10 @@ const App = ({ Component }) => {
             >
                 <Input.Search />
             </div>
-            {isLogin.state ? (
+            {isLogin ? (
                 <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                     <Avatar
-                        src={profileImg}
+                        src={user.profile}
                         style={{ backgroundColor: 'slateblue', verticalAlign: 'middle' }}
                         size='large'
                     ></Avatar>
