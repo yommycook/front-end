@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
@@ -6,31 +6,32 @@ import 'antd/dist/reset.css';
 
 import { Typography, Input, Avatar, Button } from 'antd';
 
-import { FirebaseService } from '../src/service/services';
+import { FirebaseService } from '../service/services';
 
 const { Title } = Typography;
 
 const FireBaseAuth = new FirebaseService();
 
 const App = ({ Component }) => {
-    const [isLogin, setLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState(null);
+
     const onGoogleLogin = async () => {
         const info = await FireBaseAuth.onLogin();
         if (info) {
             const {
                 user: { uid, email, photoURL },
             } = info;
-            console.log('Login.jsx: ', uid);
-            setLogin({
-                state: true,
-                user: {
-                    uid,
-                    email,
-                    profile: photoURL,
-                },
-            });
+            setIsLogin(true);
+            setUser({ uid, email, profile: photoURL });
         }
     };
+
+    const onSignOut = async () => {
+        const signOut = await FireBaseAuth.signOut();
+        if (signOut) setIsLogin(false);
+    };
+
     return (
         <>
             <Head>
@@ -53,14 +54,14 @@ const App = ({ Component }) => {
             {isLogin ? (
                 <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                     <Avatar
+                        src={user.profile}
                         style={{ backgroundColor: 'slateblue', verticalAlign: 'middle' }}
                         size='large'
-                    >
-                        지니
-                    </Avatar>
+                    ></Avatar>
                     <Button
                         size='small'
                         style={{ margin: '0 16px', verticalAlign: 'middle' }}
+                        onClick={onSignOut}
                     >
                         로그아웃
                     </Button>
