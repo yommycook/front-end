@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import 'antd/dist/reset.css';
-
 import { Typography, Input, Avatar, Button } from 'antd';
 
 import { FirebaseService } from '../service/services';
