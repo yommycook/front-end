@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from '../store/store';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
@@ -9,12 +11,14 @@ import { Typography, Input, Avatar, Button } from 'antd';
 import { FirebaseService } from '../service/services';
 
 const { Title } = Typography;
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess, logout } from '../store/slices/authSlice';
 
 const FireBaseAuth = new FirebaseService();
 
 const App = ({ Component }) => {
-    const [isLogin, setIsLogin] = useState(false);
-    const [user, setUser] = useState(null);
+    const dispatch = useDispatch();
+    const { isLogin, user } = useSelector((state) => state.auth);
 
     const onGoogleLogin = async () => {
         const info = await FireBaseAuth.onLogin();
@@ -22,14 +26,13 @@ const App = ({ Component }) => {
             const {
                 user: { uid, email, photoURL },
             } = info;
-            setIsLogin(true);
-            setUser({ uid, email, profile: photoURL });
+            dispatch(loginSuccess({ uid, email, profile: photoURL }));
         }
     };
 
     const onSignOut = async () => {
         const signOut = await FireBaseAuth.signOut();
-        if (signOut) setIsLogin(false);
+        if (signOut) dispatch(logout());
     };
 
     return (
@@ -84,4 +87,18 @@ App.propTypes = {
     Component: PropTypes.elementType.isRequired,
 };
 
-export default App;
+export default function AppWithStore({ Component, pageProps }) {
+    return (
+        <Provider store={store}>
+            <App
+                Component={Component}
+                {...pageProps}
+            />
+        </Provider>
+    );
+}
+
+AppWithStore.propTypes = {
+    Component: PropTypes.elementType.isRequired,
+    pageProps: PropTypes.object.isRequired,
+};
