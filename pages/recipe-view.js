@@ -4,6 +4,8 @@ import AppLayout from '../components/AppLayout';
 import {} from '@ant-design/icons';
 import { Typography, Image, Divider } from 'antd';
 
+import InsertComment from '../components/insert-comment';
+
 const { Title, Paragraph, Text, Link } = Typography;
 
 const recipe_data = {
@@ -144,6 +146,8 @@ const RecipeView = () => {
                 <Divider></Divider>
                 <Title level={4}>조리 순서</Title>
                 <HowTo how_to={how_to} />
+                <Divider></Divider>
+                <InsertComment />
             </AppLayout>
         </>
     );

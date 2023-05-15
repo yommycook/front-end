@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Menu } from 'antd';
+import { WechatOutlined } from '@ant-design/icons';
+import { Menu, FloatButton } from 'antd';
 
 const AppLayout = ({ children }) => {
     return (
@@ -22,6 +23,10 @@ const AppLayout = ({ children }) => {
                 </Menu.Item>
             </Menu>
             {children}
+            <FloatButton
+                icon={<WechatOutlined />}
+                tooltip={<div>무엇이든 질문하기</div>}
+            />
         </div>
     );
 };
