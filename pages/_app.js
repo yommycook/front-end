@@ -4,11 +4,10 @@ import store from '../store/store';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import 'antd/dist/reset.css';
-
 import { Typography, Input, Avatar, Button } from 'antd';
 
 import { FirebaseService } from '../service/services';
+import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 import { useDispatch, useSelector } from 'react-redux';
