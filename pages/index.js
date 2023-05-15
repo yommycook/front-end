@@ -4,6 +4,7 @@ import AppLayout from '../components/AppLayout';
 import Head from 'next/head';
 import Add from '../components/add';
 import CardBoard from '../components/cardboard';
+import AddRecipe from '../components/addrecipe';
 
 const Home = () => {
     return (
@@ -14,6 +15,7 @@ const Home = () => {
             </Head>
             <AppLayout>
                 <Add />
+                <AddRecipe />
                 <div
                     style={{
                         display: 'inline-block',
