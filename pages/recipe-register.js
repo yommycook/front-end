@@ -138,7 +138,7 @@ const RecipeRegister = () => {
                                             block
                                             icon={<PlusOutlined />}
                                         >
-                                            Add sights
+                                            재료 추가
                                         </Button>
                                     </Form.Item>
                                 </>
@@ -201,7 +201,7 @@ const RecipeRegister = () => {
                                             block
                                             icon={<PlusOutlined />}
                                         >
-                                            Add sights
+                                            단계 추가
                                         </Button>
                                     </Form.Item>
                                 </>
