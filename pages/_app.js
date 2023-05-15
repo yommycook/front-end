@@ -34,7 +34,7 @@ const App = ({ Component }) => {
         <>
             <Head>
                 <meta charSet='utf-8' />
-                <title>요미</title>
+                <title href='/'>요미</title>
             </Head>
             <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                 <Title>요미</Title>
