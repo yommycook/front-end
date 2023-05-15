@@ -213,6 +213,7 @@ const RecipeRegister = () => {
                             <Button
                                 type='primary'
                                 htmlType='submit'
+                                href='/recipe-view'
                             >
                                 레시피 등록
                             </Button>
