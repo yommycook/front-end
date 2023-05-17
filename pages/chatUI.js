@@ -4,6 +4,7 @@ import { MinusCircleOutlined, PlusOutlined, SendOutlined } from '@ant-design/ico
 import moment from 'moment';
 import AppLayout from '../components/AppLayout';
 import Head from 'next/head';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const ChatUI = () => {
     const [form] = Form.useForm();
@@ -28,42 +29,45 @@ const ChatUI = () => {
             <Head>
                 <title>쿼카GPT|요미</title>
             </Head>
+
             <AppLayout>
-                <div style={{ height: '70vh', padding: '30px' }}>
-                    <MentView chatMent={chatMent} />
-                    <UserView userComment={userComment} />
-                </div>
-                <Form
-                    form={form}
-                    layout='vertical'
-                    autoComplete='off'
-                >
-                    <div>
-                        <Row>
-                            <Col span={22}>
-                                <Form.Item
-                                    name='name'
-                                    style={{ paddingRight: '10px', paddingLeft: '10px' }}
-                                >
-                                    <TextArea
-                                        rows={2}
-                                        onPressEnter={InputComment}
-                                        value={inputValue}
-                                        onChange={(e) => setInputValue(e.target.value)}
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col span={2}>
-                                <Button
-                                    type='primary'
-                                    shape='circle'
-                                    icon={<SendOutlined />}
-                                    onClick={InputComment}
-                                />
-                            </Col>
-                        </Row>
+                <div style={{ height: '80vh', overflow: 'hidden' }}>
+                    <div style={{ height: '60vh', padding: '30px', overflow: 'scroll' }}>
+                        <MentView chatMent={chatMent} />
+                        <UserView userComment={userComment} />
                     </div>
-                </Form>
+                    <Form
+                        form={form}
+                        layout='vertical'
+                        autoComplete='off'
+                    >
+                        <div style={{ height: '35vh', margin: '30px' }}>
+                            <Row>
+                                <Col span={22}>
+                                    <Form.Item
+                                        name='name'
+                                        style={{ paddingRight: '10px', paddingLeft: '10px' }}
+                                    >
+                                        <TextArea
+                                            rows={2}
+                                            onPressEnter={InputComment}
+                                            value={inputValue}
+                                            onChange={(e) => setInputValue(e.target.value)}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={2}>
+                                    <Button
+                                        type='primary'
+                                        shape='circle'
+                                        icon={<SendOutlined />}
+                                        onClick={InputComment}
+                                    />
+                                </Col>
+                            </Row>
+                        </div>
+                    </Form>
+                </div>
             </AppLayout>
         </>
     );
@@ -71,18 +75,24 @@ const ChatUI = () => {
 
 const UserView = ({ userComment }) => {
     return (
-        <div style={{ display: 'inline-block', float: 'right' }}>
+        <Space
+            direction='vertical'
+            style={{ float: 'right' }}
+        >
             {userComment.map((item, index) => (
                 <div
                     key={index}
-                    style={{ backgroundColor: 'lavender' }}
+                    style={{
+                        display: 'inline-block',
+                        float: 'right',
+                    }}
                 >
                     <Typography>
-                        <pre>{item}</pre>
+                        <pre style={{ backgroundColor: 'pink' }}>{item}</pre>
                     </Typography>
                 </div>
             ))}
-        </div>
+        </Space>
     );
 };
 
