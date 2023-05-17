@@ -14,10 +14,12 @@
     },
     "dependencies": {
         "@ant-design/colors": "^7.0.0",
+        "@reduxjs/toolkit": "^1.9.5",
         "antd": "^5.4.7",
         "emotion": "^11.0.0",
         "firebase": "^9.21.0",
         "interface": "^1.2.1",
+        "moment": "^2.29.4",
         "next": "^12.3.4",
         "next-redux-wrapper": "^8.1.0",
         "prop-types": "^15.8.1",
@@ -32,6 +34,7 @@
         "styled-component": "^2.8.0",
         "styled-components": "^5.3.10",
         "theme": "^0.1.0",
+        "toolkit": "^1.5.4",
         "update": "^0.7.4"
     },
     "devDependencies": {

@@ -26,6 +26,10 @@ const AppLayout = ({ children }) => {
             <FloatButton
                 icon={<WechatOutlined />}
                 tooltip={<div>무엇이든 질문하기</div>}
+                href='/chatUI'
+                style={{
+                    top: 700,
+                }}
             />
         </div>
     );
