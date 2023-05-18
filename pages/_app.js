@@ -1,37 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Provider } from 'react-redux';
-import store from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
 import { Typography, Input, Avatar, Button } from 'antd';
 
-import { FirebaseService } from '../service/services';
-import { Link } from 'react-router-dom';
+import store from '../store/store';
+import { onGoogleLogin, onSignOut } from '../service/googleAuth';
 
 const { Title } = Typography;
-import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess, logout } from '../store/slices/authSlice';
-
-const FireBaseAuth = new FirebaseService();
 
 const App = ({ Component }) => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const { isLogin, user } = useSelector((state) => state.auth);
+    const [clicked, setClicked] = useState(false);
 
-    const onGoogleLogin = async () => {
-        const info = await FireBaseAuth.onLogin();
-        if (info) {
-            const {
-                user: { uid, email, photoURL },
-            } = info;
-            dispatch(loginSuccess({ uid, email, profile: photoURL }));
+    const handleGoogleLogin = () => {
+        if (!clicked && !user) {
+            setClicked(true);
+            onGoogleLogin(dispatch);
         }
     };
 
-    const onSignOut = async () => {
-        const signOut = await FireBaseAuth.signOut();
-        if (signOut) dispatch(logout());
+    const handleSignOut = () => {
+        setClicked(false);
+        onSignOut(dispatch);
+        router.push('/');
     };
 
     return (
@@ -63,7 +61,7 @@ const App = ({ Component }) => {
                     <Button
                         size='small'
                         style={{ margin: '0 16px', verticalAlign: 'middle' }}
-                        onClick={onSignOut}
+                        onClick={handleSignOut}
                     >
                         로그아웃
                     </Button>
@@ -72,7 +70,8 @@ const App = ({ Component }) => {
                 <Button
                     size='small'
                     style={{ margin: '0 16px', verticalAlign: 'middle' }}
-                    onClick={onGoogleLogin}
+                    onClick={handleGoogleLogin}
+                    disabled={clicked}
                 >
                     로그인
                 </Button>
