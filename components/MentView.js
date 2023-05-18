@@ -18,7 +18,7 @@ const MentView = ({ chatMent }) => {
                         marginLeft: '10px',
                     }}
                 >
-                    <pre>{chatMent.content}</pre>
+                    <pre>{chatMent}</pre>
                 </Typography>
             </Space>
         </div>

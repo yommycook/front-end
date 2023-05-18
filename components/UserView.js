@@ -8,19 +8,9 @@ const UserView = ({ userComment }) => {
             direction='vertical'
             style={{ float: 'right' }}
         >
-            {userComment.map((item, index) => (
-                <div
-                    key={index}
-                    style={{
-                        display: 'inline-block',
-                        float: 'right',
-                    }}
-                >
-                    <Typography>
-                        <pre style={{ backgroundColor: 'pink' }}>{item}</pre>
-                    </Typography>
-                </div>
-            ))}
+            <Typography>
+                <pre style={{ backgroundColor: 'pink' }}>{userComment}</pre>
+            </Typography>
         </Space>
     );
 };
