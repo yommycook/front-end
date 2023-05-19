@@ -87,6 +87,7 @@ const ChatUI = () => {
                 <div style={{ height: '80vh', overflow: 'hidden' }}>
                     <div style={{ height: '60vh', padding: '30px', overflow: 'scroll' }}>
                         <MentView
+                            key={`gpt_hello`}
                             chatMent={
                                 '안녕하세요 쿼카 GPT입니다. 요리에 관한 궁금한 점을 언제든지 물어봐주세요!'
                             }
