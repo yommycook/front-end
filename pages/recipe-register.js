@@ -16,7 +16,7 @@ const { Title } = Typography;
 const RecipeRegister = () => {
     const [recipeData, setRecipeData] = useState(null);
     const router = useRouter();
-    const { isLogin } = useSelector((state) => state.auth);
+    const { isLogin, user } = useSelector((state) => state.auth);
     if (!isLogin) {
         router.push('/');
     }
@@ -24,7 +24,7 @@ const RecipeRegister = () => {
     const handleRecipeSubmit = () => {
         setRecipeData((prevData) => ({
             ...prevData,
-            createAt: new Date(),
+            owner: user.uid,
         }));
         // recipeData를 사용하여 필요한 처리를 수행
         //이미지 디비저장로직 디비 주소 받기

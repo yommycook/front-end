@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button, Form, Input, InputNumber, Select, Typography, Divider, Space, Upload } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -13,6 +13,7 @@ const normFile = (e) => {
 };
 
 const RecipeData = ({ setRecipeData }) => {
+    const [category, setCategory] = useState([null, null, null]);
     const [pictureList, setPictureList] = useState([]);
     // 요리 제목 변경 함수
     const handleTitleChange = (e) => {
@@ -28,26 +29,13 @@ const RecipeData = ({ setRecipeData }) => {
             recipeDescription: e.target.value,
         }));
     };
-    // 요리 대분류 변경
-    const handleCategoryChange = (value) => {
-        setRecipeData((prevData) => ({
-            ...prevData,
-            category: value,
-        }));
-    };
-    // 요리 중분류 변경
-    const handleSubCategoryChange = (value) => {
-        setRecipeData((prevData) => ({
-            ...prevData,
-            SsubCategory: value,
-        }));
-    };
-    // 요리 소분류 변경
-    const handleSubSubCategoryChange = (value) => {
-        setRecipeData((prevData) => ({
-            ...prevData,
-            subSubCategory: value,
-        }));
+    // 요리 분류 변경
+    const handleCategoryChange = (value, index) => {
+        setCategory((prevData) => {
+            const newCategory = [...prevData];
+            newCategory[index] = value;
+            return newCategory;
+        });
     };
     // 요리 인분수 변경
     const handlePersonChange = (value) => {
@@ -82,6 +70,13 @@ const RecipeData = ({ setRecipeData }) => {
             picture: fileList.length > 0 ? fileList[0] : null,
         }));
     };
+
+    useEffect(() => {
+        setRecipeData((prevData) => ({
+            ...prevData,
+            category: category,
+        }));
+    }, [category]);
 
     return (
         <>
@@ -135,7 +130,7 @@ const RecipeData = ({ setRecipeData }) => {
                     style={{
                         marginBottom: '10px',
                     }}
-                    onChange={handleCategoryChange}
+                    onChange={(value) => handleCategoryChange(value, 0)}
                 >
                     <Select.Option value='demo'>Demo</Select.Option>
                 </Select>
@@ -144,7 +139,7 @@ const RecipeData = ({ setRecipeData }) => {
                     style={{
                         marginBottom: '10px',
                     }}
-                    onChange={handleSubCategoryChange}
+                    onChange={(value) => handleCategoryChange(value, 1)}
                 >
                     <Select.Option value='demo'>Demo</Select.Option>
                 </Select>
@@ -153,7 +148,7 @@ const RecipeData = ({ setRecipeData }) => {
                     style={{
                         marginBottom: '10px',
                     }}
-                    onChange={handleSubSubCategoryChange}
+                    onChange={(value) => handleCategoryChange(value, 2)}
                 >
                     <Select.Option value='demo'>Demo</Select.Option>
                 </Select>
