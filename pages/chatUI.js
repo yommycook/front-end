@@ -121,7 +121,6 @@ const ChatUI = () => {
                                         <TextArea
                                             rows={2}
                                             onPressEnter={getMessage}
-                                            value={getMessage}
                                             onChange={(e) => setValue(e.target.value)}
                                         />
                                     </Form.Item>

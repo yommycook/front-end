@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Typography, Space } from 'antd';
 
@@ -9,10 +10,14 @@ const UserView = ({ userComment }) => {
             style={{ float: 'right' }}
         >
             <Typography>
-                <pre style={{ backgroundColor: 'pink' }}>{userComment}</pre>
+                <pre style={{ backgroundColor: 'pink', whiteSpace: 'pre-wrap' }}>{userComment}</pre>
             </Typography>
         </Space>
     );
+};
+
+UserView.propTypes = {
+    userComment: PropTypes.string.isRequired,
 };
 
 export default UserView;
