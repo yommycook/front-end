@@ -50,8 +50,10 @@ const CardBoard = () => (
                                     </Popover>
                                 }
                                 title={item.title}
-                                description='This is the description'
                             />
+                            <div style={{ marginTop: '15px' }}>
+                                <Text>이렇게만하면 완벽! 초간단 미역국 레시피</Text>
+                            </div>
                             <div style={{ marginTop: '13px' }}>
                                 <Space style={{ marginRight: '12px' }}>
                                     <TeamOutlined style={{ color: 'gray' }} />
