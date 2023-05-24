@@ -8,7 +8,7 @@ const contentStyle = {
     textAlign: 'center',
     background: '#364d79',
 };
-const Add = () => {
+const Banner = () => {
     const onChange = (currentSlide) => {
         console.log(currentSlide);
     };
@@ -29,4 +29,4 @@ const Add = () => {
         </Carousel>
     );
 };
-export default Add;
+export default Banner;
