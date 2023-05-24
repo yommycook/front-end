@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, InputNumber, Select, Typography, Divider, Space, Upload } from 'antd';
 
@@ -6,21 +6,28 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 const CookStep = ({ setRecipeData }) => {
-    const [stepList, setStepList] = useState([]);
+    const [how_to_make, setHow_to_make] = useState([]);
+    const pref = useRef();
 
     const handleStepChange = (e, index) => {
-        const updatedList = [...stepList];
+        const updatedList = [...how_to_make];
         updatedList[index] = { ...updatedList[index], description: e.target.value };
-        setStepList(updatedList);
+        setHow_to_make(updatedList);
     };
 
     const handleFileChange = (info, index) => {
-        let fileList = [...info.fileList];
-        fileList = fileList.slice(-1); // Keep last uploaded file only
+        const picture = pref.current;
+        console.log('picture: ', picture);
+        const fileListForDB = info.fileList[0]?.originFileObj;
+        console.log(fileListForDB);
 
-        setStepList((list) => {
+        console.log(info);
+        let cook_image = [...info.fileList];
+        cook_image = cook_image.slice(-1); // Keep last uploaded file only
+
+        setHow_to_make((list) => {
             const newList = [...list];
-            newList[index] = { ...newList[index], fileList };
+            newList[index] = { ...newList[index], cook_image, fileListForDB };
             return newList;
         });
     };
@@ -28,9 +35,9 @@ const CookStep = ({ setRecipeData }) => {
     useEffect(() => {
         setRecipeData((prevData) => ({
             ...prevData,
-            stepList: stepList,
+            how_to_make: how_to_make,
         }));
-    }, [stepList]);
+    }, [how_to_make]);
 
     return (
         <>
@@ -58,13 +65,14 @@ const CookStep = ({ setRecipeData }) => {
                                     valuePropName='fileList'
                                 >
                                     <Upload
+                                        ref={pref}
                                         action='/upload.do'
                                         listType='picture-card'
                                         accept='image/*'
                                         onChange={(info) => handleFileChange(info, field.key)}
                                         multiple={false}
                                         beforeUpload={() => false}
-                                        fileList={stepList[field.key]?.fileList ?? []}
+                                        fileList={how_to_make[field.key]?.cook_image ?? []}
                                     >
                                         <div>
                                             <PlusOutlined />
@@ -74,10 +82,10 @@ const CookStep = ({ setRecipeData }) => {
                                 </Form.Item>
                                 <MinusCircleOutlined
                                     onClick={() => {
-                                        const newStepList = stepList.filter(
+                                        const newHohow_to_make = how_to_make.filter(
                                             (_, idx) => idx !== field.key
                                         );
-                                        setStepList(newStepList);
+                                        setHow_to_make(newHohow_to_make);
                                         remove(field.key);
                                     }}
                                 />
@@ -88,7 +96,7 @@ const CookStep = ({ setRecipeData }) => {
                                 type='dashed'
                                 onClick={() => {
                                     add();
-                                    setStepList([...stepList, {}]);
+                                    setHow_to_make([...how_to_make, {}]);
                                 }}
                                 block
                                 icon={<PlusOutlined />}

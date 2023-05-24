@@ -105,3 +105,38 @@ const obj = {
         },
     ],
 };
+
+const data = {
+    id: R_id,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    title: 'title 나는 김 한 율 이다',
+    owner: 'rkdeofuf',
+    description: 'des 나는 이 진 이 다',
+    category: ['강대렬', '김현수', '이진이', '김한율'],
+    people: '4',
+    minutes: '123456',
+    level: '최상',
+    ingredients: [
+        {
+            ingredient: '재료 이름 뭐로 하냐',
+            amount: '0.5T',
+        },
+        {
+            ingredient: '재료 이름 뭐로 하냐 ?',
+            amount: '1123T',
+        },
+    ],
+    how_to_make: [
+        {
+            step: 1,
+            cooking: '쿠킹입니다잉',
+            cook_image: 'cooking_image_url',
+        },
+        {
+            step: 2,
+            cooking: '쿠킹 2입니다잉',
+            cook_image: 'cooking_image_url',
+        },
+    ],
+};

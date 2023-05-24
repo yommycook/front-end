@@ -67,7 +67,7 @@ const RecipeData = ({ setRecipeData }) => {
 
         setRecipeData((prevData) => ({
             ...prevData,
-            picture: fileList.length > 0 ? fileList[0] : null,
+            picture: fileList.length > 0 ? { fileList: fileList[0] } : null,
         }));
     };
 

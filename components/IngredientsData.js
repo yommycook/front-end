@@ -15,9 +15,9 @@ const IngredientsData = ({ setRecipeData }) => {
         setIngredientList(updatedList);
     };
 
-    const handleQuantityChange = (quantity, id) => {
+    const handleAmountChange = (amount, id) => {
         const updatedList = ingredientList.map((item) =>
-            item.id === id ? { ...item, quantity: quantity } : item
+            item.id === id ? { ...item, amount: amount } : item
         );
         setIngredientList(updatedList);
     };
@@ -52,14 +52,14 @@ const IngredientsData = ({ setRecipeData }) => {
                                         />
                                     </Form.Item>
                                     <Form.Item
-                                        {...field.quantity}
+                                        {...field.amount}
                                         style={{ display: 'inline-block', marginRight: '15px' }}
                                         label='정량'
                                     >
                                         <InputNumber
                                             placeholder='예) 300g'
                                             onChange={(value) =>
-                                                handleQuantityChange(value, field.key)
+                                                handleAmountChange(value, field.key)
                                             }
                                         />
                                     </Form.Item>
@@ -82,7 +82,7 @@ const IngredientsData = ({ setRecipeData }) => {
                                         add();
                                         setIngredientList([
                                             ...ingredientList,
-                                            { id: idCounter, ingredient: '', quantity: null },
+                                            { id: idCounter, ingredient: '', amount: null },
                                         ]);
                                         setIdCounter(idCounter + 1);
                                     }}

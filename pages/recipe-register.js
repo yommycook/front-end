@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -11,24 +11,45 @@ import RecipeData from '../components/RecipeData';
 import IngredientsData from '../components/IngredientsData';
 import CookStep from '../components/CookStep';
 
+import { createRecipe, createRecipe_test } from '../service/dbService';
+
 const { Title } = Typography;
 
 const RecipeRegister = () => {
     const [recipeData, setRecipeData] = useState(null);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { isLogin, user } = useSelector((state) => state.auth);
     if (!isLogin) {
         router.push('/');
     }
+
+    const convertRecipeData = (recipeData) => {
+        const newRecipe = { ...recipeData };
+        const convertHow_to_make = newRecipe.how_to_make.map((obj, index) => {
+            console.log(obj);
+            return {
+                step: index + 1,
+                cook_image: obj.cook_image[0].originFileObj,
+                description: obj.description,
+            };
+        });
+        newRecipe = {
+            ...newRecipe,
+            how_to_make: convertHow_to_make,
+        };
+        return newRecipe;
+    };
+
     // 레시피 등록 버튼 클릭 시 처리할 함수
-    const handleRecipeSubmit = () => {
+    const handleRecipeSubmit = async () => {
         setRecipeData((prevData) => ({
             ...prevData,
             owner: user.uid,
         }));
-        // recipeData를 사용하여 필요한 처리를 수행
-        //이미지 디비저장로직 디비 주소 받기
-        console.log(recipeData);
+
+        const convertData = await convertRecipeData(recipeData);
+        createRecipe(convertData);
     };
     return (
         <>
