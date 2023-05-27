@@ -5,7 +5,7 @@ import {} from '@ant-design/icons';
 import { Typography, Image, Divider, Space, Row, Col, Avatar } from 'antd';
 
 import Comment from '../components/Comment';
-
+import RateStar from '../components/RateStar';
 import Writer from '../components/Writer';
 
 const { Title, Paragraph, Text, Link } = Typography;
@@ -196,6 +196,8 @@ const RecipeView = () => {
                 <div style={{ padding: '50px' }}></div>
                 <Divider></Divider>
                 <Writer></Writer>
+                <Divider></Divider>
+                <RateStar></RateStar>
                 <Divider></Divider>
                 <Comment></Comment>
                 <div style={{ padding: '80px' }}></div>
