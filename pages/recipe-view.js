@@ -2,9 +2,11 @@ import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import {} from '@ant-design/icons';
-import { Typography, Image, Divider } from 'antd';
+import { Typography, Image, Divider, Space, Row, Col, Avatar } from 'antd';
 
-import InsertComment from '../components/insert-comment';
+import Comment from '../components/Comment';
+
+import Writer from '../components/Writer';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -91,8 +93,17 @@ const IngredientList = ({ ingredients }) => {
         <div>
             {ingredients.map((item, index) => (
                 <div key={index}>
-                    <Text style={{ display: 'block' }}>재료: {item.ingredient}</Text>
-                    <Text style={{ display: 'block' }}>용량: {item.amount}</Text>
+                    <Row gutter={16}>
+                        <Col
+                            style={{ marginBottom: '10px' }}
+                            span={6}
+                        >
+                            <Text>{item.ingredient}</Text>
+                        </Col>
+                        <Col span={6}>
+                            <Text> {item.amount}</Text>
+                        </Col>
+                    </Row>
                 </div>
             ))}
         </div>
@@ -101,16 +112,21 @@ const IngredientList = ({ ingredients }) => {
 
 const HowTo = ({ how_to }) => {
     return (
-        <div>
+        <div style={{ paddingLeft: '50px' }}>
             {how_to.map((item, index) => (
                 <div
                     key={index}
-                    style={{ margin: '10px' }}
+                    style={{ margin: '10px', paddingBottom: '30px' }}
                 >
-                    <Text style={{ display: 'block' }}>{item.step} 단계</Text>
-                    <Text style={{ display: 'block' }}>{item.cooking}</Text>
+                    <Title
+                        level={5}
+                        style={{ display: 'block' }}
+                    >
+                        {item.step} 단계
+                    </Title>
+                    <Text style={{ display: 'block', paddingBottom: '15px' }}>{item.cooking}</Text>
                     <Image
-                        width={200}
+                        width={300}
                         src={item.cook_image}
                     />
                 </div>
@@ -126,28 +142,63 @@ const RecipeView = () => {
                 <title>레시피|요미</title>
             </Head>
             <AppLayout>
-                <Title level={2}>{recipe_data.recipe_title}</Title>
-                <Image
-                    width={400}
-                    src={recipe_data.completed_image}
-                />
+                <Row
+                    type='flex'
+                    align='center'
+                >
+                    <Col>
+                        <Space
+                            align='center'
+                            style={{ marginTop: '30px' }}
+                        >
+                            <Image
+                                width={400}
+                                src={recipe_data.completed_image}
+                            />
+                        </Space>
+                    </Col>
+                </Row>
+                <Title
+                    align='center'
+                    level={2}
+                >
+                    {recipe_data.recipe_title}
+                </Title>
+                <Paragraph align='center'>{recipe_data.recipe_description}</Paragraph>
                 <Divider></Divider>
-                <Title level={4}>요리 소개</Title>
-                <Paragraph>{recipe_data.recipe_description}</Paragraph>
+                <div>
+                    <Title
+                        style={{ paddingLeft: '60px' }}
+                        level={3}
+                    >
+                        요리 정보
+                    </Title>
+                    <div style={{ paddingLeft: '60px' }}>
+                        <Text style={{ display: 'block' }}> {recipe_data.category} </Text>
+                        <Text style={{ display: 'block' }}>{recipe_data.presons} 인분</Text>
+                        <Text style={{ display: 'block' }}>조리 시간: {recipe_data.minute} 분</Text>
+                        <Text style={{ display: 'block' }}>요리 난이도: {recipe_data.level}</Text>
+                    </div>
+                </div>
                 <Divider></Divider>
-                <Title level={4}>요리 정보</Title>
-                <Text style={{ display: 'block' }}>{recipe_data.category}</Text>
-                <Text style={{ display: 'block' }}>{recipe_data.presons} 인분</Text>
-                <Text style={{ display: 'block' }}>조리 시간: {recipe_data.minute} 분</Text>
-                <Text style={{ display: 'block' }}>요리 난이도: {recipe_data.level}</Text>
+                <div style={{ paddingLeft: '60px' }}>
+                    <Title level={3}>재료</Title>
+                    <IngredientList ingredients={ingredients} />
+                </div>
                 <Divider></Divider>
-                <Title level={4}>재료</Title>
-                <IngredientList ingredients={ingredients} />
-                <Divider></Divider>
-                <Title level={4}>조리 순서</Title>
+                <Title
+                    style={{ paddingLeft: '60px' }}
+                    level={3}
+                >
+                    조리 순서
+                </Title>
                 <HowTo how_to={how_to} />
+                <div style={{ padding: '50px' }}></div>
                 <Divider></Divider>
-                <InsertComment />
+                <Writer></Writer>
+                <Divider></Divider>
+                <Comment></Comment>
+                <div style={{ padding: '80px' }}></div>
             </AppLayout>
         </>
     );
