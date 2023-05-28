@@ -1,4 +1,4 @@
-import React from 'react'; //안 써도 상관 없음! (Next에서는 걍 실행 가능! pages라는 디렉토리를 알아본당)
+import React, { useState, useEffect } from 'react'; //안 써도 상관 없음! (Next에서는 걍 실행 가능! pages라는 디렉토리를 알아본당)
 import { useSelector } from 'react-redux';
 
 import AppLayout from '../components/AppLayout';
@@ -7,8 +7,25 @@ import Banner from '../components/Banner';
 import CardBoard from '../components/cardboard';
 import AddRecipe from '../components/Addrecipe';
 
+import { getAllRecipes } from '../service/dbService';
+
 const Home = () => {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const getRecipeData = async () => {
+        try {
+            const recipes = await getAllRecipes();
+            setLoading(false);
+            setData(recipes);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        getRecipeData();
+    }, []);
     const { isLogin, user } = useSelector((state) => state.auth);
+    console.log('index', data);
     return (
         <>
             <Head>
@@ -18,34 +35,37 @@ const Home = () => {
             <AppLayout>
                 <Banner />
                 {isLogin && <AddRecipe />}
-
-                <div
-                    style={{
-                        display: 'inline-block',
-                        verticalAlign: 'middle',
-                        margin: '30px',
-                    }}
-                >
-                    <CardBoard />
-                </div>
-                <div
-                    style={{
-                        display: 'inline-block',
-                        verticalAlign: 'middle',
-                        margin: '30px',
-                    }}
-                >
-                    <CardBoard />
-                </div>
-                <div
-                    style={{
-                        display: 'inline-block',
-                        verticalAlign: 'middle',
-                        margin: '30px',
-                    }}
-                >
-                    <CardBoard />
-                </div>
+                {!loading && (
+                    <>
+                        <div
+                            style={{
+                                display: 'inline-block',
+                                verticalAlign: 'middle',
+                                margin: '30px',
+                            }}
+                        >
+                            <CardBoard data={data} />
+                        </div>
+                        <div
+                            style={{
+                                display: 'inline-block',
+                                verticalAlign: 'middle',
+                                margin: '30px',
+                            }}
+                        >
+                            <CardBoard data={data} />
+                        </div>
+                        <div
+                            style={{
+                                display: 'inline-block',
+                                verticalAlign: 'middle',
+                                margin: '30px',
+                            }}
+                        >
+                            <CardBoard data={data} />
+                        </div>
+                    </>
+                )}
             </AppLayout>
         </>
     );

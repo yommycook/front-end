@@ -1,43 +1,79 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import Slider from 'react-slick';
+import styled from 'styled-components';
 
-import { Card, List, Typography } from 'antd';
-import InfiniteScroll from 'react-infinite-scroll-component';
-const { Title } = Typography;
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { Card, Typography, Button } from 'antd';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import RecipeCard from './RecipeCard';
 
-const data = [
-    {
-        title: 'Title 1',
-    },
-    {
-        title: 'Title 2',
-    },
-    {
-        title: 'Title 3',
-    },
-    {
-        title: 'Title 4',
-    },
-];
-const CardBoard = () => (
-    <>
-        <Title level={5}>최근에 등록된 레시피</Title>
-        <div>
-            <InfiniteScroll dataLength={data.length}>
-                <List
-                    grid={{
-                        gutter: 16,
-                        column: 4,
-                    }}
-                    itemLayout='vertical'
-                    dataSource={data}
-                    renderItem={(item) => (
-                        <List.Item>
-                            <Card title={item.title}>Card content</Card>
-                        </List.Item>
-                    )}
-                />
-            </InfiniteScroll>
+import { getAllRecipes } from '../service/dbService';
+
+const { Title, Text } = Typography;
+const { Meta } = Card;
+
+const SliderContainer = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
+const CardBoard = ({ data }) => {
+    const sliderRef = useRef(null);
+    const [currentGroup, setCurrentGroup] = useState(0);
+
+    const settings = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        vertical: false,
+    };
+
+    const prev = () => {
+        setCurrentGroup((prevGroup) => Math.max(prevGroup - 1, 0));
+        sliderRef.current.slickPrev();
+    };
+
+    const next = () => {
+        setCurrentGroup((prevGroup) =>
+            Math.min(prevGroup + 1, Math.ceil(data.length / settings.slidesToShow) - 1)
+        );
+        sliderRef.current.slickNext();
+    };
+
+    const start = currentGroup * settings.slidesToShow;
+    const end = start + settings.slidesToShow;
+    const currentData = data.slice(start, end);
+
+    return (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+                type='ghost'
+                icon={<LeftOutlined />}
+                onClick={prev}
+                disabled={currentGroup === 0}
+            />
+            <SliderContainer>
+                <Slider
+                    ref={sliderRef}
+                    {...settings}
+                >
+                    {currentData.map((item) => (
+                        <div key={item.title}>
+                            <RecipeCard item={item} />
+                        </div>
+                    ))}
+                </Slider>
+            </SliderContainer>
+            <Button
+                type='ghost'
+                icon={<RightOutlined />}
+                onClick={next}
+                disabled={end >= data.length}
+            />
         </div>
-    </>
-);
+    );
+};
 export default CardBoard;

@@ -20,3 +20,7 @@ export const uploadAllImages = async (files) => {
     }
     return fileURLs;
 };
+
+export const getAllRecipes = () => {
+    return DBService.getAllRecipes();
+};
