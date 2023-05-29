@@ -199,7 +199,9 @@ const RecipeView = () => {
                 <Divider></Divider>
                 <RateStar></RateStar>
                 <Divider></Divider>
-                <Comment></Comment>
+                <div>
+                    <Comment></Comment>
+                </div>
                 <div style={{ padding: '80px' }}></div>
             </AppLayout>
         </>

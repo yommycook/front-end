@@ -4,7 +4,7 @@ import store from '../store/store';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import { Typography, Input, Avatar, Button } from 'antd';
+import { Typography, Input, Avatar, Button, Row, Col, Image } from 'antd';
 
 import { FirebaseService } from '../service/services';
 import { Link } from 'react-router-dom';
@@ -40,43 +40,59 @@ const App = ({ Component }) => {
                 <meta charSet='utf-8' />
                 <title>요미</title>
             </Head>
-            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                <Title>요미</Title>
-            </div>
-            <div
-                style={{
-                    display: 'inline-block',
-                    verticalAlign: 'middle',
-                    marginLeft: '80px',
-                    marginRight: '40px',
-                }}
+            <Row
+                gutter={24}
+                style={{ margin: '15px', marginTop: '20px' }}
             >
-                <Input.Search />
-            </div>
-            {isLogin ? (
-                <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                    <Avatar
-                        src={user.profile}
-                        style={{ backgroundColor: 'slateblue', verticalAlign: 'middle' }}
-                        size='large'
-                    ></Avatar>
-                    <Button
-                        size='small'
-                        style={{ margin: '0 16px', verticalAlign: 'middle' }}
-                        onClick={onSignOut}
+                <Col span={4}>
+                    <div
+                        style={{
+                            display: 'inline-block',
+                            verticalAlign: 'middle',
+                        }}
                     >
-                        로그아웃
-                    </Button>
-                </div>
-            ) : (
-                <Button
-                    size='small'
-                    style={{ margin: '0 16px', verticalAlign: 'middle' }}
-                    onClick={onGoogleLogin}
-                >
-                    로그인
-                </Button>
-            )}
+                        <img src={'../public/img/logo.png'}></img>
+                    </div>
+                </Col>
+                <Col span={14}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            verticalAlign: 'middle',
+                            marginLeft: '80px',
+                            marginRight: '40px',
+                        }}
+                    >
+                        <Input.Search />
+                    </div>
+                </Col>
+                <Col span={6}>
+                    {isLogin ? (
+                        <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                            <Avatar
+                                src={user.profile}
+                                style={{ backgroundColor: 'slateblue', verticalAlign: 'middle' }}
+                                size='large'
+                            ></Avatar>
+                            <Button
+                                size='small'
+                                style={{ margin: '0 16px', verticalAlign: 'middle' }}
+                                onClick={onSignOut}
+                            >
+                                로그아웃
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button
+                            size='small'
+                            style={{ margin: '0 16px', verticalAlign: 'middle' }}
+                            onClick={onGoogleLogin}
+                        >
+                            로그인
+                        </Button>
+                    )}
+                </Col>
+            </Row>
             <Component />
         </>
     );
