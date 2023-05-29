@@ -52,26 +52,19 @@ const ChatUI = () => {
                 'Content-Type': 'application/json',
             },
         };
-
+        if (value.includes('안녕')) {
+            setMessage({
+                role: 'gpt',
+                content: '반갑습니다! 저는 요미서비스의 쿼카입니다!',
+            });
+        }
         try {
             const response = await fetch('http://localhost:8000/completions', options);
             const data = await response.json();
 
             console.log('data:', data);
 
-            if (checkForFoodKeywords(value)) {
-                setMessage(data.choices[0].message);
-            } else if (value.includes('안녕')) {
-                setMessage({
-                    role: 'gpt',
-                    content: '반갑습니다! 저는 요미서비스의 쿼카입니다!',
-                });
-            } else {
-                setMessage({
-                    role: 'gpt',
-                    content: '죄송하지만 음식과 관련된 질문에 대해서만 답변해드릴 수 있습니다.',
-                });
-            }
+            setMessage(data.choices[0]?.message);
         } catch (error) {
             console.log(error);
         }
