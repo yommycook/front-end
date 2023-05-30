@@ -42,7 +42,7 @@ const RecipeView = () => {
                     align='center'
                     level={2}
                 >
-                    {recipetitle}
+                    {recipe.title}
                 </Title>
                 <Paragraph align='center'>{recipe.description}</Paragraph>
                 <Divider></Divider>
@@ -65,7 +65,7 @@ const RecipeView = () => {
                 <IngredientList ingredients={recipe.ingredientList} />
                 <Divider></Divider>
                 <Title level={4}>조리 순서</Title>
-                <HowTo how_to={recipe.how_to.cook} />
+                <HowTo how_to={recipe.how_to_make} />
                 <Divider></Divider>
                 <div>
                     <Comment></Comment>
