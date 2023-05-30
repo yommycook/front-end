@@ -1,5 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import Slider from 'react-slick';
+
 import styled from 'styled-components';
 
 import 'slick-carousel/slick/slick.css';
@@ -9,6 +12,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import RecipeCard from './RecipeCard';
 
 import { getAllRecipes } from '../service/dbService';
+import { getRecipeById } from '../service/dbService';
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
@@ -19,6 +23,8 @@ const SliderContainer = styled.div`
 `;
 
 const CardBoard = ({ data }) => {
+    const router = useRouter();
+    const dispatch = useDispatch();
     const sliderRef = useRef(null);
     const [currentGroup, setCurrentGroup] = useState(0);
 
@@ -47,6 +53,16 @@ const CardBoard = ({ data }) => {
     const end = start + settings.slidesToShow;
     const currentData = data.slice(start, end);
 
+    const viewRecipe = async (id) => {
+        console.log('click ');
+        try {
+            await getRecipeById(id, dispatch);
+            router.push('/recipe-view');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             <Button
@@ -62,7 +78,10 @@ const CardBoard = ({ data }) => {
                 >
                     {currentData.map((item) => (
                         <div key={item.title}>
-                            <RecipeCard item={item} />
+                            <RecipeCard
+                                item={item}
+                                onClick={() => viewRecipe(item.id).catch(console.error)}
+                            />
                         </div>
                     ))}
                 </Slider>

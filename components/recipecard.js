@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { TeamOutlined, ClockCircleOutlined, FireOutlined } from '@ant-design/icons';
 import { Avatar, Card, Typography, Popover, Space } from 'antd';
 
@@ -6,9 +7,9 @@ import { modifyTime } from '../service/factory';
 
 const { Meta } = Card;
 const { Text } = Typography;
-const RecipeCard = ({ item }) => {
+const RecipeCard = ({ item, onClick }) => {
     return (
-        <>
+        <div onClick={onClick}>
             <Card
                 style={{ width: 240 }}
                 cover={
@@ -46,7 +47,7 @@ const RecipeCard = ({ item }) => {
                 </div>
                 <Text style={{ color: 'gray', float: 'right' }}>{item.createdAt.slice(0, 10)}</Text>
             </Card>
-        </>
+        </div>
     );
 };
 

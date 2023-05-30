@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import AppLayout from '../components/AppLayout';
 import Head from 'next/head';
 import Banner from '../components/Banner';
-import CardBoard from '../components/cardboard';
+import CardBoard from '../components/Cardboard';
 import AddRecipe from '../components/Addrecipe';
 
 import { getAllRecipes } from '../service/dbService';
