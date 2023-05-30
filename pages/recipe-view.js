@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
-import {} from '@ant-design/icons';
-import { Typography, Image, Divider, Space, Row, Col, Avatar } from 'antd';
+import { ImportOutlined } from '@ant-design/icons';
+import { Typography, Image, Divider, Space, Row, Col, Avatar, Button } from 'antd';
 
 import Comment from '../components/Comment';
 import RateStar from '../components/RateStar';
@@ -193,7 +193,21 @@ const RecipeView = () => {
                     조리 순서
                 </Title>
                 <HowTo how_to={how_to} />
-                <div style={{ padding: '50px' }}></div>
+                <div style={{ padding: '50px' }}>
+                    <Row gutter={24}>
+                        <Col span={16}></Col>
+                        <Col span={6}>
+                            <Space>
+                                <Button
+                                    icon={<ImportOutlined />}
+                                    size='large'
+                                >
+                                    레시피 저장하기
+                                </Button>
+                            </Space>
+                        </Col>
+                    </Row>
+                </div>
                 <Divider></Divider>
                 <Writer></Writer>
                 <Divider></Divider>

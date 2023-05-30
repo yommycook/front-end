@@ -3,11 +3,11 @@ import { Provider } from 'react-redux';
 import store from '../store/store';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import { Typography, Input, Avatar, Button, Row, Col, Image } from 'antd';
 
 import { FirebaseService } from '../service/services';
-import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,7 +51,9 @@ const App = ({ Component }) => {
                             verticalAlign: 'middle',
                         }}
                     >
-                        <img src={'../public/img/logo.png'}></img>
+                        <a href='/'>
+                            <img src={'../public/img/logo.png'}></img>
+                        </a>
                     </div>
                 </Col>
                 <Col span={14}>

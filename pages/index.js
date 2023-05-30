@@ -1,6 +1,6 @@
 import React from 'react'; //안 써도 상관 없음! (Next에서는 걍 실행 가능! pages라는 디렉토리를 알아본당)
 
-import { Button } from 'antd';
+import { Button, Divider } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 
 import AppLayout from '../components/AppLayout';
@@ -43,6 +43,7 @@ const Home = () => {
                         margin: '30px',
                     }}
                 >
+                    <Divider />
                     <CardBoard />
                 </div>
                 <div
@@ -52,6 +53,7 @@ const Home = () => {
                         margin: '30px',
                     }}
                 >
+                    <Divider />
                     <CardBoard />
                 </div>
                 <div
@@ -61,6 +63,7 @@ const Home = () => {
                         margin: '30px',
                     }}
                 >
+                    <Divider />
                     <CardBoard />
                 </div>
             </AppLayout>
