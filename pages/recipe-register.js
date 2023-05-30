@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { Button, Form, Typography, Divider } from 'antd';
 
 import AppLayout from '../components/AppLayout';
+import { CheckOutlined } from '@ant-design/icons';
 import RecipeData from '../components/RecipeData';
 import IngredientsData from '../components/IngredientsData';
 import CookStep from '../components/CookStep';
@@ -57,8 +58,13 @@ const RecipeRegister = () => {
                 <title>레시피 작성|요미</title>
             </Head>
             <AppLayout>
-                <div>
-                    <Title level={3}>레시피 작성하기</Title>
+                <div style={{ marginLeft: '100px', marginBottom: '80px', alignItems: 'center' }}>
+                    <Title
+                        level={3}
+                        style={{ marginBottom: '40px' }}
+                    >
+                        레시피 작성하기
+                    </Title>
                     <Form
                         style={{ maxWidth: 600 }}
                         onFinish={handleRecipeSubmit}
@@ -70,15 +76,18 @@ const RecipeRegister = () => {
                         <CookStep setRecipeData={setRecipeData} />
                         <Divider></Divider>
                         <Form.Item>
-                            {/* <Link href='/recipe-view'> */}
-                            <a>
+                            <div style={{ maxWidth: '200px', margin: 'auto' }}>
+                                {/* <Link href='/recipe-view'> */}
                                 <Button
+                                    icon={<CheckOutlined />}
+                                    block
                                     type='primary'
                                     htmlType='submit'
+                                    size='large'
                                 >
                                     레시피 등록
                                 </Button>
-                            </a>
+                            </div>
                             {/* </Link> */}
                         </Form.Item>
                     </Form>

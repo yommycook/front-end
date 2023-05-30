@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'; //안 써도 상관 없음! (Next에서는 걍 실행 가능! pages라는 디렉토리를 알아본당)
+
+import { Button, Divider } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 
 import AppLayout from '../components/AppLayout';
@@ -34,7 +37,28 @@ const Home = () => {
             </Head>
             <AppLayout>
                 <Banner />
-                {isLogin && <AddRecipe />}
+                {isLogin && (
+                    <>
+                        <div style={{ height: '20px' }}></div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                margin: 'auto',
+                                maxWidth: '400px',
+                            }}
+                        >
+                            <Button
+                                icon={<PlusCircleOutlined />}
+                                type='dashed'
+                                href='/recipe-register'
+                                size='large'
+                                block
+                            >
+                                새로운 레시피 등록
+                            </Button>
+                        </div>
+                    </>
+                )}
                 {!loading && (
                     <>
                         <div
@@ -44,6 +68,7 @@ const Home = () => {
                                 margin: '30px',
                             }}
                         >
+                            <Divider />
                             <CardBoard data={data} />
                         </div>
                         <div
@@ -53,6 +78,7 @@ const Home = () => {
                                 margin: '30px',
                             }}
                         >
+                            <Divider />
                             <CardBoard data={data} />
                         </div>
                         <div
@@ -62,6 +88,7 @@ const Home = () => {
                                 margin: '30px',
                             }}
                         >
+                            <Divider />
                             <CardBoard data={data} />
                         </div>
                     </>
