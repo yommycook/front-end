@@ -1,11 +1,11 @@
 import { FirebaseDBService, cloudinaryService } from '../service/services';
-import { loginSuccess, logout } from '../store/slices/authSlice';
+import { getRecipeData } from '../store/slices/recipeSlice';
 
 const Cloudinary = new cloudinaryService();
 const DBService = new FirebaseDBService(Cloudinary);
 
 export const createRecipe = async (data) => {
-    DBService.createRecipe(data);
+    await DBService.createRecipe(data);
 };
 
 export const createRecipe_test = async () => {
@@ -19,4 +19,15 @@ export const uploadAllImages = async (files) => {
         fileURLs.push(fileData.url);
     }
     return fileURLs;
+};
+
+export const getAllRecipes = () => {
+    return DBService.getAllRecipes();
+};
+
+export const getRecipeById = async (id, dispatch) => {
+    const recipeData = await DBService.getRecipeById(id);
+    if (recipeData) {
+        dispatch(getRecipeData(recipeData));
+    }
 };
