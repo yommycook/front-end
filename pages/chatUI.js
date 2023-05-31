@@ -65,6 +65,7 @@ const ChatUI = () => {
             console.log('data:', data);
 
             setMessage(data.choices[0]?.message);
+            setValue('');
         } catch (error) {
             console.log(error);
         }

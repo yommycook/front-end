@@ -5,6 +5,24 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 const { TextArea } = Input;
+
+const cate = {
+    요리: [
+        '밑반찬',
+        '메인반찬',
+        '국/탕',
+        '찌개',
+        '면',
+        '김치',
+        '젓갈/장류',
+        '양식',
+        '덮밥',
+        '소스',
+        '기타',
+    ],
+    베이킹: ['과자', '빵', '케이크', '파이', '페이스트리', '기타 디저트'],
+    음료: ['주스/에이드', '쉐이크', '커피', '차', '주류', '기타 음료'],
+};
 const normFile = (e) => {
     if (Array.isArray(e)) {
         return e;
@@ -132,7 +150,9 @@ const RecipeData = ({ setRecipeData }) => {
                     }}
                     onChange={(value) => handleCategoryChange(value, 0)}
                 >
-                    <Select.Option value='demo'>Demo</Select.Option>
+                    <Select.Option value='요리'>요리</Select.Option>
+                    <Select.Option value='베이킹'>베이킹</Select.Option>
+                    <Select.Option value='음료'>음료</Select.Option>
                 </Select>
                 <Select
                     placeholder='중분류'
@@ -141,16 +161,17 @@ const RecipeData = ({ setRecipeData }) => {
                     }}
                     onChange={(value) => handleCategoryChange(value, 1)}
                 >
-                    <Select.Option value='demo'>Demo</Select.Option>
-                </Select>
-                <Select
-                    placeholder='소분류'
-                    style={{
-                        marginBottom: '10px',
-                    }}
-                    onChange={(value) => handleCategoryChange(value, 2)}
-                >
-                    <Select.Option value='demo'>Demo</Select.Option>
+                    {console.log(cate[category], category)}
+                    {category &&
+                        cate[category[0]] &&
+                        cate[category[0]].map((cate, index) => (
+                            <Select.Option
+                                key={index}
+                                value={cate}
+                            >
+                                {cate}
+                            </Select.Option>
+                        ))}
                 </Select>
             </Form.Item>
             <div>
