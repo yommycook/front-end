@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'; //안 써도 상관 없음! 
 import { Button, Divider } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
-
+import Link from 'next/link';
 import AppLayout from '../components/AppLayout';
 import Head from 'next/head';
 import Banner from '../components/Banner';
@@ -14,7 +14,9 @@ import { getAllRecipes } from '../service/dbService';
 
 const Home = () => {
     const [data, setData] = useState([]);
+    const [myrecipe, setMyrecipe] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { isLogin, user } = useSelector((state) => state.auth);
     const getRecipeData = async () => {
         try {
             const recipes = await getAllRecipes();
@@ -24,11 +26,25 @@ const Home = () => {
             console.log(error);
         }
     };
+    const getMyRecipeData = async (id) => {
+        try {
+            const recipes = await getAllRecipes(id);
+            setLoading(false);
+            setMyrecipe(recipes);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     useEffect(() => {
         getRecipeData();
-    }, []);
-    const { isLogin, user } = useSelector((state) => state.auth);
+        if (isLogin) {
+            getMyRecipeData(user.uid);
+            console.log(getAllRecipes(user.uid));
+        }
+    }, [isLogin]);
+
     console.log('index', data);
+
     return (
         <>
             <Head>
@@ -47,30 +63,35 @@ const Home = () => {
                                 maxWidth: '400px',
                             }}
                         >
-                            <Button
-                                icon={<PlusCircleOutlined />}
-                                type='dashed'
-                                href='/recipe-register'
-                                size='large'
-                                block
-                            >
-                                새로운 레시피 등록
-                            </Button>
+                            <Link href='/recipe-register'>
+                                <Button
+                                    icon={<PlusCircleOutlined />}
+                                    type='dashed'
+                                    size='large'
+                                    block
+                                >
+                                    새로운 레시피 등록
+                                </Button>
+                            </Link>
                         </div>
                     </>
                 )}
                 {!loading && (
                     <>
-                        <div
-                            style={{
-                                display: 'inline-block',
-                                verticalAlign: 'middle',
-                                margin: '30px',
-                            }}
-                        >
-                            <Divider />
-                            <CardBoard data={data} />
-                        </div>
+                        {isLogin && (
+                            <div
+                                style={{
+                                    display: 'inline-block',
+                                    verticalAlign: 'middle',
+                                    margin: '30px',
+                                }}
+                            >
+                                내 레시피
+                                <Divider />
+                                <CardBoard data={myrecipe} />
+                            </div>
+                        )}
+
                         <div
                             style={{
                                 display: 'inline-block',
