@@ -21,9 +21,12 @@ const RecipeRegister = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { isLogin, user } = useSelector((state) => state.auth);
-    if (!isLogin) {
-        router.push('/');
-    }
+    console.log(isLogin);
+    useEffect(() => {
+        // if (!isLogin) {
+        //     router.push('/');
+        // }
+    }, [isLogin, router]);
 
     const convertRecipeData = (recipeData) => {
         const newRecipe = { ...recipeData };

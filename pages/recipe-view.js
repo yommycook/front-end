@@ -62,7 +62,9 @@ const RecipeView = () => {
                 </div>
                 <Divider></Divider>
                 <Title level={4}>재료</Title>
-                <IngredientList ingredients={recipe.ingredientList} />
+                <IngredientList
+                    ingredients={recipe.ingredientList ? recipe.ingredientList : recipe.ingredients}
+                />
                 <Divider></Divider>
                 <Title level={4}>조리 순서</Title>
                 <HowTo how_to={recipe.how_to_make} />
