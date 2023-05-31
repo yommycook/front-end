@@ -31,3 +31,7 @@ export const getRecipeById = async (id, dispatch) => {
         dispatch(getRecipeData(recipeData));
     }
 };
+
+export const getRecipesByOwner = (id) => {
+    return DBService.getRecipesByOwner(id);
+};

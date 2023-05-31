@@ -51,7 +51,12 @@ const App = ({ Component }) => {
                         }}
                     >
                         <a href='/'>
-                            <img src={'../public/img/logo.png'}></img>
+                            <img
+                                style={{ width: '100px' }}
+                                src={
+                                    'https://firebasestorage.googleapis.com/v0/b/study-from-cafe.appspot.com/o/imagesrc%2Flogo.png?alt=media&token=cb946f87-5ff6-4462-8888-0de224737c56'
+                                }
+                            ></img>
                         </a>
                     </div>
                 </Col>

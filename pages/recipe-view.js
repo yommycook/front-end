@@ -61,11 +61,41 @@ const RecipeView = () => {
                     </div>
                 </div>
                 <Divider></Divider>
-                <Title level={4}>재료</Title>
-                <IngredientList ingredients={recipe.ingredientList} />
+                <div style={{ paddingLeft: '60px' }}>
+                    <Title level={3}>재료</Title>
+                    <IngredientList
+                        ingredients={
+                            recipe.ingredientList ? recipe.ingredientList : recipe.ingredients
+                        }
+                    />
+                </div>
                 <Divider></Divider>
-                <Title level={4}>조리 순서</Title>
+                <Title
+                    style={{ paddingLeft: '60px' }}
+                    level={3}
+                >
+                    조리 순서
+                </Title>
                 <HowTo how_to={recipe.how_to_make} />
+                <div style={{ padding: '50px' }}>
+                    <Row gutter={24}>
+                        <Col span={16}></Col>
+                        <Col span={6}>
+                            <Space>
+                                <Button
+                                    icon={<ImportOutlined />}
+                                    size='large'
+                                >
+                                    레시피 가져오기
+                                </Button>
+                            </Space>
+                        </Col>
+                    </Row>
+                </div>
+                <Divider></Divider>
+                <Writer></Writer>
+                <Divider></Divider>
+                <RateStar></RateStar>
                 <Divider></Divider>
                 <div>
                     <Comment></Comment>
