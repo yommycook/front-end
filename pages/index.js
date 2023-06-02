@@ -10,7 +10,7 @@ import Banner from '../components/Banner';
 import CardBoard from '../components/Cardboard';
 import AddRecipe from '../components/Addrecipe';
 
-import { getAllRecipes } from '../service/dbService';
+import { getAllRecipes, getRecipesByOwner } from '../service/dbService';
 
 const Home = () => {
     const [data, setData] = useState([]);
@@ -28,9 +28,9 @@ const Home = () => {
     };
     const getMyRecipeData = async (id) => {
         try {
-            const recipes = await getAllRecipes(id);
+            const recipes = await getRecipesByOwner(id);
             setLoading(false);
-            setMyrecipe(recipes);
+            setMyrecipe(recipes[0].list);
         } catch (error) {
             console.log(error);
         }
@@ -88,7 +88,7 @@ const Home = () => {
                             >
                                 내 레시피
                                 <Divider />
-                                <CardBoard data={myrecipe} />
+                                <CardBoard data={data} />
                             </div>
                         )}
 

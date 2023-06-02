@@ -161,7 +161,6 @@ const RecipeData = ({ setRecipeData }) => {
                     }}
                     onChange={(value) => handleCategoryChange(value, 1)}
                 >
-                    {console.log(cate[category], category)}
                     {category &&
                         cate[category[0]] &&
                         cate[category[0]].map((cate, index) => (

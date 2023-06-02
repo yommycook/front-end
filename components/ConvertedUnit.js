@@ -90,25 +90,28 @@ function convertAll(material, value, from) {
     for (const [unit, conversionRate] of Object.entries(conversionTable)) {
         results[unit] = baseValue / conversionRate;
     }
-
+    console.log(conversionTable['소주잔'], from, conversionTable[from], results);
     return results;
 }
+const changeValue = (v) => {
+    const num = v.toFixed(2); // 소수 둘째자리
+    return num.toLocaleString(); // 천 단위로 쉼표 넣기
+};
 
 const ConvertedUnit = ({ option, value, unit }) => {
     const [viewUnit, setViewUnit] = useState({});
-
+    console.log(unit);
     const category = identifyCategory(option);
 
     useEffect(() => {
         setViewUnit(convertAll(option, value, unit));
-        console.log(viewUnit);
     }, [option, value, unit]);
 
     return (
         <Descriptions title='변환된 계량정보'>
             {Object.entries(viewUnit).map(([key, value]) => (
                 <Descriptions.Item label={mappingLabel[key]}>
-                    {isNaN(value) ? 'N/A' : value.toFixed(2)}
+                    {isNaN(value) ? 'N/A' : changeValue(value)}
                     {mappingUnit[key]}
                 </Descriptions.Item>
             ))}

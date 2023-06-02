@@ -32,6 +32,8 @@ export const getRecipeById = async (id, dispatch) => {
     }
 };
 
-export const getRecipesByOwner = (id) => {
-    return DBService.getRecipesByOwner(id);
+export const getRecipesByOwner = async (id) => {
+    const data = await DBService.getRecipesByOwner(id);
+    console.log('내레시피', data, 'id', id);
+    return data;
 };

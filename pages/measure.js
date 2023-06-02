@@ -31,7 +31,7 @@ const units = [
         label: '작은 술',
     },
     {
-        value: '소수잔',
+        value: '소주잔',
         label: '소주잔',
     },
     {
@@ -88,7 +88,7 @@ const Measure = () => {
     return (
         <>
             <Head>
-                <title>마이페이지|요미</title>
+                <title>계량정보|요미</title>
             </Head>
             <AppLayout>
                 <div>계량</div>

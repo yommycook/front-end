@@ -200,10 +200,10 @@ export class FirebaseDBService {
         const recipeRef = collection(db, 'recipes');
         const q = query(recipeRef, where('owner', '==', ownerId));
         try {
-            let recipe; // undefined (default)
+            let recipe = []; // undefined (default)
             const snapshot = await getDocs(q);
             snapshot.forEach((doc) => {
-                recipe = doc.data();
+                recipe.push(doc.data());
             });
             if (!recipe) return false;
             else {
