@@ -7,10 +7,12 @@ const UserView = ({ userComment }) => {
     return (
         <Space
             direction='vertical'
-            style={{ float: 'right' }}
+            style={{ float: 'right', display: 'block' }}
         >
             <Typography>
-                <pre style={{ backgroundColor: 'pink', whiteSpace: 'pre-wrap' }}>{userComment}</pre>
+                <pre style={{ backgroundColor: 'pink', whiteSpace: 'pre-wrap', display: 'block' }}>
+                    {userComment}
+                </pre>
             </Typography>
         </Space>
     );

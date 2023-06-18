@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Form, Input, List, Affix, Typography, Col, Row, Space } from 'antd';
-import { MinusCircleOutlined, PlusOutlined, SendOutlined } from '@ant-design/icons';
+import { Avatar, Button, Form, Input, List, Affix, Typography, Col, Row, Space, Spin } from 'antd';
+import {
+    MinusCircleOutlined,
+    PlusOutlined,
+    SendOutlined,
+    LoadingOutlined,
+} from '@ant-design/icons';
 import AppLayout from '../components/AppLayout';
 import Head from 'next/head';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -13,6 +18,7 @@ const ChatUI = () => {
     const [value, setValue] = useState('');
     const [message, setMessage] = useState({});
     const [previousChats, setPreviousChats] = useState([]);
+    const [loading, setLoading] = useState(false); // loading 상태 추가
 
     useEffect(() => {
         if (value && message) {
@@ -32,7 +38,6 @@ const ChatUI = () => {
         }
     }, [message]);
 
-    //키워드check로 관련된 질문인지 아닌지 확인함
     const checkForFoodKeywords = (value) => {
         for (let i = 0; i < keywords.length; i++) {
             if (value.includes(keywords[i])) {
@@ -43,6 +48,8 @@ const ChatUI = () => {
     };
 
     const getMessage = async () => {
+        setLoading(true); // 로딩 상태 시작
+
         const options = {
             method: 'POST',
             body: JSON.stringify({
@@ -52,23 +59,25 @@ const ChatUI = () => {
                 'Content-Type': 'application/json',
             },
         };
+
         if (value.includes('안녕')) {
             setMessage({
                 role: 'gpt',
                 content: '반갑습니다! 저는 요미서비스의 쿼카입니다!',
             });
-        }
-        try {
-            const response = await fetch('http://localhost:8000/completions', options);
-            const data = await response.json();
+        } else {
+            try {
+                const response = await fetch('http://localhost:8000/completions', options);
+                const data = await response.json();
 
-            console.log('data:', data);
+                console.log('data:', data);
 
-            setMessage(data.choices[0]?.message);
-            setValue('');
-        } catch (error) {
-            console.log(error);
+                setMessage(data.choices[0]?.message);
+            } catch (error) {
+                console.log(error);
+            }
         }
+        setLoading(false); // 로딩 상태 종료
     };
 
     return (
@@ -114,20 +123,32 @@ const ChatUI = () => {
                                     >
                                         <TextArea
                                             rows={2}
-                                            onPressEnter={getMessage}
                                             onChange={(e) => setValue(e.target.value)}
                                         />
                                     </Form.Item>
                                 </Col>
-                                <Col span={2}>
-                                    <Button
-                                        type='primary'
-                                        shape='circle'
-                                        icon={<SendOutlined />}
-                                        onClick={getMessage}
-                                    />
-                                </Col>
+                                {loading ? (
+                                    <Col span={2}>
+                                        <LoadingOutlined />
+                                    </Col>
+                                ) : (
+                                    <Col span={2}>
+                                        :
+                                        <Button
+                                            type='primary'
+                                            shape='circle'
+                                            icon={<SendOutlined />}
+                                            onClick={getMessage}
+                                            disabled={loading} // 로딩 중에는 버튼 비활성화
+                                        />
+                                    </Col>
+                                )}
                             </Row>
+                            {loading && (
+                                <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                                    <Spin /> {/* 로딩 중인 상태를 나타내는 Spin 컴포넌트 */}
+                                </div>
+                            )}
                         </div>
                     </Form>
                 </div>

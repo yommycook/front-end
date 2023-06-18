@@ -90,7 +90,6 @@ function convertAll(material, value, from) {
     for (const [unit, conversionRate] of Object.entries(conversionTable)) {
         results[unit] = baseValue / conversionRate;
     }
-    console.log(conversionTable['소주잔'], from, conversionTable[from], results);
     return results;
 }
 const changeValue = (v) => {
@@ -100,7 +99,6 @@ const changeValue = (v) => {
 
 const ConvertedUnit = ({ option, value, unit }) => {
     const [viewUnit, setViewUnit] = useState({});
-    console.log(unit);
     const category = identifyCategory(option);
 
     useEffect(() => {
